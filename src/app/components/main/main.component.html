@@ -1,5 +1,5 @@
 <div class="game-container">
-  @if (gameOver()) {
+  @if (!gameOver()) {
     <div class="flex gap-4">
       @for (balloon of balloons; track balloon.id) {
         <bl-balloon

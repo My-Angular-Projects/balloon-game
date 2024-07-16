@@ -8,11 +8,12 @@ import {
 import { BalloonComponent } from '../balloon/balloon.component';
 import { IBalloon } from '../../interfaces';
 import { BalloonModel } from '../../models';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'bl-main',
   standalone: true,
-  imports: [BalloonComponent],
+  imports: [BalloonComponent, JsonPipe],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
