@@ -2,9 +2,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   inject,
   input,
   OnInit,
+  Output,
 } from '@angular/core';
 import { IBalloon } from '../../interfaces';
 import { animate, AnimationBuilder, style } from '@angular/animations';
@@ -22,6 +24,9 @@ export class BalloonComponent implements OnInit {
   private readonly elementRef = inject(ElementRef);
 
   public balloon = input.required<IBalloon>();
+
+  @Output() balloonHit = new EventEmitter<string>();
+  @Output() balloonMissed = new EventEmitter<void>();
 
   ngOnInit(): void {
     this.generateAnimation();
@@ -51,6 +56,12 @@ export class BalloonComponent implements OnInit {
     ]);
     const player = animation.create(this.elementRef.nativeElement.firstChild);
     player.play();
-    player.onDone(() => console.log('all done'));
+    player.onDone(() => {
+      this.balloonMissed.emit();
+    });
+  }
+
+  public pop(): void {
+    this.balloonHit.emit(this.balloon().id);
   }
 }

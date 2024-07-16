@@ -1,11 +1,27 @@
 <div class="game-container">
-  <div class="flex gap-4">
-    @for (balloon of balloons; track balloon.id) {
-      <bl-balloon [balloon]="balloon" />
-    }
-  </div>
-  <div class="text-2xl font-bold flex gap-4">
-    <span class="capitalize">score: 0</span>
-    <span class="capitalize">missed: 0</span>
-  </div>
+  @if (gameOver()) {
+    <div class="flex gap-4">
+      @for (balloon of balloons; track balloon.id) {
+        <bl-balloon
+          [balloon]="balloon"
+          (balloonHit)="balloonHitHandler($event)"
+          (balloonMissed)="balloonMissedHandler()"
+        />
+      }
+    </div>
+    <div class="text-2xl font-bold flex gap-4">
+      <span class="capitalize">score: {{ score }}</span>
+      @if (missed()) {
+        <span class="capitalize">missed: {{ missed() }}</span>
+      }
+    </div>
+  } @else {
+    <section class="flex flex-col gap-10">
+      <div class="text-3xl text-center capitalize">game over</div>
+      <button
+        (click)="restartGame()"
+        class="rounded-md px-2 py-1.5 bg-amber-700 text-white cursor-pointer capitalize"
+      >restart</button>
+    </section>
+  }
 </div>
