@@ -28,9 +28,26 @@ export class BalloonComponent implements OnInit {
   }
 
   private generateAnimation(): void {
+    const buffer = 20;
+    const minSpeed = 5;
+    const speedVariation = 5;
+    const maxWidth =
+      window.innerWidth -
+      this.elementRef.nativeElement.firstChild.clientWidth -
+      buffer;
+    const leftPosition = Math.floor(Math.random() * maxWidth);
+    const speed = minSpeed + Math.random() * speedVariation;
     const animation = this.animation.build([
-      style({ translate: `0 0`, position: 'fixed', left: 0, bottom: 0 }),
-      animate(`4s ease-in-out`, style({ translate: `0 -100vh` })),
+      style({
+        translate: `${leftPosition}px 0`,
+        position: 'fixed',
+        left: 0,
+        bottom: 0,
+      }),
+      animate(
+        `${speed}s ease-in-out`,
+        style({ translate: `${leftPosition}px -100vh` }),
+      ),
     ]);
     const player = animation.create(this.elementRef.nativeElement.firstChild);
     player.play();
